@@ -1,0 +1,45 @@
+<ol class="breadcrumb float-right">
+  <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+  <li class="breadcrumb-item active">Lista de Gastos</li>
+</ol>
+<div class="card">
+  <div class="header">
+    <h2 class="title">Lista de Gastos</h2>
+  </div>
+  <div class="content">
+    <a [routerLink]="['../gastos', 'new' ]" class="btn btn-primary">Novo</a>
+  </div>
+</div>
+<div class="card" *ngIf="gastoList.length > 0">
+  <div *ngIf="feedback" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
+  <div class="table-responsive">
+    <table class="table table-centered table-hover mb-0" id="datatable">
+      <thead>
+        <tr>
+          <th class="border-top-0" scope="col">Id</th>
+          <th class="border-top-0" scope="col">Nome Pessoa</th>
+          <th class="border-top-0" scope="col">Descrição</th>
+          <th class="border-top-0" scope="col">Data</th>
+          <th class="border-top-0" scope="col">Valor</th>
+          <th class="border-top-0" scope="col">Tags</th>
+          <th class="border-top-0" scope="col" style="width:120px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of gastoList" [class.active]="item === selectedGasto">
+        
+          <td>{{item.id}}</td>
+          <td>{{item.nomePessoa}}</td>
+          <td>{{item.descricao}}</td>
+          <td>{{item.dataHora | date: "MM/dd/yyyy HH:mm:ss"}}</td>
+          <td>{{item.valor | currency: "BRL"}}</td>
+          <td>{{item.tags}}</td>
+          <td style="white-space: nowrap">
+            <a [routerLink]="['../gastos', item.id ]" class="btn btn-secondary">Editar</a>&nbsp;
+            <button (click)="delete(item)" class="btn btn-danger">Remover</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
